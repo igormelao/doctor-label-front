@@ -2,7 +2,7 @@ import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 
 import { TokenService } from './../authentication/token.service';
-import { Cases } from './model/cases';
+import { Case } from './model/cases';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,22 @@ import { Cases } from './model/cases';
 export class CasesService {
   constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
-  getCases(){
+  getNextCase(){
     const token = this.tokenService.returnToken();
-    let headers: HttpHeaders = new HttpHeaders();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    headers.append('Authorization', token);
-
-    return this.httpClient.get<Cases>('http://localhost:8081/cases/');
+    return this.httpClient.get<Case>('http://localhost:8081/cases/nextCase',
+    { headers: new HttpHeaders({'Authorization': token}) });
   }
+
+  saveLabel(idCase: number, idLabel: number){
+    const token = this.tokenService.returnToken();
+    return this.httpClient.post(`http://localhost:8081/cases/${idCase}/label`,
+    {
+      idLabel: idLabel
+    },
+    {
+      headers: new HttpHeaders({'Authorization': token})
+    });
+  }
+
 }
 

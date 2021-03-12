@@ -1,6 +1,6 @@
 export interface Cases extends Array<Case> {}
 
 export interface Case{
-  id:number;
+  caseId:number;
   electronicHealthRecord:string;
 }
