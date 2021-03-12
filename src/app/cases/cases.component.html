@@ -1,0 +1,40 @@
+<div class="d-md-flex  align-items-center" *ngIf="cases; else doneBlock">
+  <div class="row" *ngFor="let case of cases.slice(0, index)">
+    <div class="col-md-6 p-0 bg-EHR h-md-100">
+      <div class="d-md-flex align-items-center h-100 p-5 text-center justify-content-center">
+          <div class="pt-5 pb-5">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+                  <h2 class="h2 text-center mb-3"></h2>
+                  <div class="form-group">
+                    <label for="case" class="">Please Review This Case:</label>
+                    <textarea class="form-control rounded-0 text-left"
+                    id="case"
+                    rows="15"
+                    cols="200"
+                    readonly
+                    >
+                    {{case.electronicHealthRecord}}
+                    </textarea>
+                  </div>
+                  <button (click)="next()">Next Case</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-md-6 p-0 h-md-100">
+        <div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
+            Second half content here
+        </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #doneBlock>
+  <div class="d-md-flex  align-items-center">
+    <p>You are Done!</p>
+  </div>
+</ng-template>

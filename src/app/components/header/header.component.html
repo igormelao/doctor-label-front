@@ -4,8 +4,8 @@
     <div class="" *ngIf="user$ | async as user">
       <div *ngIf="user.name; else login">
         <i class="fa fa-user-circle mr-1"></i>
-        <span class="mr-1">Hello, {{ user.name }}!</span>
-        <button (click)="logout()" class="btn btn-light fa fa-times" aria-label="Logout">
+        <span class="mr-1">Logged in as: Dr.{{ user.name }}!</span>
+        <button (click)="logout()" class="btn btn-light fa fa-times" aria-label="Logout">Logout
         </button>
       </div>
     </div>

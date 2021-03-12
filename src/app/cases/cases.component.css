@@ -1,0 +1,6 @@
+@media (min-width: 768px) {
+  .h-md-100 { height: 85vh; }
+}
+.btn-round { border-radius: 30px; }
+.bg-EHR { background: rgb(217, 223, 238); }
+
