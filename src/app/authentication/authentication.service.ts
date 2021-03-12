@@ -1,19 +1,32 @@
+import { TokenService } from './token.service';
+import { UserService } from './user/user.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {Token} from './token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private userService: UserService) { }
 
-  authenticate(email: string, password: string):Observable<any>{
-    return this.httpClient.post('http://localhost:8081/auth', {
+  authenticate(email: string, password: string):Observable<HttpResponse<any>>{
+    return this.httpClient.post(
+      'http://localhost:8081/auth',
+      {
       email: email,
       password: password,
-    });
+      },
+      { observe: 'response' }
+    ).pipe (
+      tap((res) => {
+        const authToken:Token = res.body as Token;
+        const token:string = authToken.token ?? '';
+        this.userService.saveToken(token);
+      })
+    )
   }
-
 }
