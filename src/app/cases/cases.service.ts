@@ -13,17 +13,19 @@ export class CasesService {
   getNextCase(){
     const token = this.tokenService.returnToken();
     return this.httpClient.get<Case>('http://localhost:8081/cases/nextCase',
-    { headers: new HttpHeaders({'Authorization': token}) });
+    { headers: new HttpHeaders({'Authorization': 'Bearer ' + token}) });
   }
 
-  saveLabel(idCase: number, idLabel: number){
+  saveLabel(idCase: number, idLabel: number, idUser: number){
+    console.log(idUser);
     const token = this.tokenService.returnToken();
     return this.httpClient.post(`http://localhost:8081/cases/${idCase}/label`,
     {
-      idLabel: idLabel
+      idLabel: idLabel,
+      idUser: idUser
     },
     {
-      headers: new HttpHeaders({'Authorization': token})
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + token})
     });
   }
 

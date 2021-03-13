@@ -1,9 +1,10 @@
-import { element } from 'protractor';
-import { stringify } from '@angular/compiler/src/util';
+import { User } from './../authentication/user/user';
+import { async } from '@angular/core/testing';
 import { Component, OnInit } from '@angular/core';
 
 import { CasesService } from './cases.service';
 import { Case, Cases } from './model/cases';
+import { UserService } from '../authentication/user/user.service';
 
 @Component({
   selector: 'app-cases',
@@ -18,6 +19,8 @@ export class CasesComponent implements OnInit {
   nameLabel = '';
   public placeholder: string = 'Select one label';
   keyword = 'name';
+  user$ = this.userService.returnUser();
+  idUser?: number;
 
   public labels = [
     {
@@ -30,7 +33,7 @@ export class CasesComponent implements OnInit {
     }
   ];
 
-  constructor(private casesService: CasesService) { }
+  constructor(private casesService: CasesService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.casesService.getNextCase()
@@ -52,7 +55,10 @@ export class CasesComponent implements OnInit {
       nameLabel: labelObject.get('name')
     }
     this.selectedLabels.push(lbl);
-    this.casesService.saveLabel(this.nextCase?.caseId as number, lbl.idLabel as number).subscribe();
+    this.user$.subscribe(val => this.idUser = val.id!);
+    this.casesService.saveLabel(this.nextCase?.caseId as number,
+      lbl.idLabel as number,
+      this.idUser as number).subscribe();
   }
 
   selectEvent(item: any) {
