@@ -18,60 +18,56 @@
                     {{nextCase.electronicHealthRecord}}
                     </textarea>
                   </div>
-                  <button (click)="closeAndNextCase()">Next Case</button>
                 </div>
               </div>
             </div>
           </div>
       </div>
     </div>
-    <div class="col-md-6 p-0 h-md-100">
-        <div class="d-md-flex  h-md-100 justify-content-center">
-          <div class="pt-5 pb-5">
+    <div class="col-md-6 p-0">
+        <div class="d-flex flex-column flex-wrap">
             <div class="container">
-              <div class="row">
-                <div class="col-md-12 w-md-100 col-labels">
-                    <h3>Labels</h3>
-                    <ul *ngIf="selectedLabels.length > 0; else emptyLabels">
-                      <li *ngFor="let label of selectedLabels">{{label.id}}&nbsp; | &nbsp;{{label.description}}</li>
-                    </ul>
-                    <ng-template #emptyLabels>
-                      <p>No labels selected</p>
-                    </ng-template>
-                    <form  #form="ngForm" (ngSubmit)="addLabel(form.value)">
-                      <div class="container">
-                        <div class="ng-autocomplete pt-3 pb-3">
-                          <ng-autocomplete #ngAutoCompleteStatic
-                                          [data]="labels"
-                                          name="label"
-                                          [(ngModel)]="idLabel"
-                                          [(ngModel)]="nameLabel"
-                                          [initialValue]=""
-                                          [placeholder]="placeholder"
-                                          [searchKeyword]="keyword"
-                                          notFoundText="Label Not found"
-                                          [itemTemplate]="labelTemplate"
-                                          [notFoundTemplate]="notFoundTemplate">
-                          </ng-autocomplete>
+                  <h3>Labels</h3>
+                  <ul *ngIf="selectedLabels.length > 0; else emptyLabels">
+                    <li *ngFor="let label of selectedLabels">{{label.id}}&nbsp; | &nbsp;{{label.description}}</li>
+                  </ul>
+                  <ng-template #emptyLabels>
+                    <p>No labels selected</p>
+                  </ng-template>
+                  <form  #form="ngForm" (ngSubmit)="addLabel(form.value)">
+                    <div class="container">
+                      <div class="ng-autocomplete pt-3 pb-3">
+                        <ng-autocomplete #ngAutoCompleteStatic
+                                        [data]="labels"
+                                        name="label"
+                                        [(ngModel)]="idLabel"
+                                        [(ngModel)]="nameLabel"
+                                        [initialValue]=""
+                                        [placeholder]="placeholder"
+                                        [searchKeyword]="keyword"
+                                        notFoundText="Label Not found"
+                                        [itemTemplate]="labelTemplate"
+                                        [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
 
-                          <ng-template #labelTemplate let-label>
+                        <ng-template #labelTemplate let-label>
 
-                            <a href="javascript:void(0)">
-                              <span [innerHTML]="label.id"></span>,
-                              <span [innerHTML]="label.description"></span>
-                          </a>
-                          </ng-template>
+                          <a href="javascript:void(0)">
+                            <span [innerHTML]="label.id"></span>,
+                            <span [innerHTML]="label.description"></span>
+                        </a>
+                        </ng-template>
 
-                          <ng-template #notFoundTemplate let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                          </ng-template>
-                        </div>
-                        <button class="btn btn-primary" type="submit">Add Label</button>
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
                       </div>
-                    </form>
-                  </div>
-              </div>
+                      <button class="btn btn-primary" type="submit">Add Label</button>
+                    </div>
+                  </form>
             </div>
+            <div class="container d-flex flex-row-reverse mt-5 pt-5">
+              <button (click)="closeAndNextCase()">Next Case</button>
           </div>
         </div>
     </div>
