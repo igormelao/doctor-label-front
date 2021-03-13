@@ -26,14 +26,14 @@
       </div>
     </div>
     <div class="col-md-6 p-0 h-md-100">
-        <div class="d-md-flex align-items-center h-md-100 p-5 justify-content-center">
+        <div class="d-md-flex  h-md-100 justify-content-center">
           <div class="pt-5 pb-5">
             <div class="container">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 w-md-100 col-labels">
                     <h3>Labels</h3>
                     <ul *ngIf="selectedLabels.length > 0; else emptyLabels">
-                      <li *ngFor="let label of selectedLabels">{{label.nameLabel}}</li>
+                      <li *ngFor="let label of selectedLabels">{{label.id}}&nbsp; | &nbsp;{{label.description}}</li>
                     </ul>
                     <ng-template #emptyLabels>
                       <p>No labels selected</p>
@@ -50,14 +50,16 @@
                                           [placeholder]="placeholder"
                                           [searchKeyword]="keyword"
                                           notFoundText="Label Not found"
-                                          [itemTemplate]="itemTemplate"
+                                          [itemTemplate]="labelTemplate"
                                           [notFoundTemplate]="notFoundTemplate">
                           </ng-autocomplete>
 
-                          <ng-template #itemTemplate let-label>
-                            <div class="label">
-                              <span [innerHTML]="label.name"></span>
-                            </div>
+                          <ng-template #labelTemplate let-label>
+
+                            <a href="javascript:void(0)">
+                              <span [innerHTML]="label.id"></span>,
+                              <span [innerHTML]="label.description"></span>
+                          </a>
                           </ng-template>
 
                           <ng-template #notFoundTemplate let-notFound>

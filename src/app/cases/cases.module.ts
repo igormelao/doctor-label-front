@@ -6,6 +6,7 @@ import { ListCasesComponent } from './list-cases/list-cases.component';
 import { CasesComponent } from './cases.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { FormsModule } from '@angular/forms';
+import { LabelsModule } from './labels/labels.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { FormsModule } from '@angular/forms';
     CasesRoutingModule,
     AutocompleteLibModule,
     FormsModule,
+    LabelsModule
   ]
 })
 export class CasesModule { }

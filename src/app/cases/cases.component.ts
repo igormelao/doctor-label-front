@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
 import { CasesService } from './cases.service';
 import { Case, Cases } from './model/cases';
 import { UserService } from '../authentication/user/user.service';
+import { LabelsService } from './labels/labels.service';
+import { Label, Labels } from './labels/model/labels';
 
 @Component({
   selector: 'app-cases',
@@ -18,27 +20,24 @@ export class CasesComponent implements OnInit {
   idLabel = '';
   nameLabel = '';
   public placeholder: string = 'Select one label';
-  keyword = 'name';
+  keyword = 'description';
   user$ = this.userService.returnUser();
   idUser?: number;
+  labels: Labels = [];
 
-  public labels = [
-    {
-      id: 'A90',
-      name:'A90',
-    },
-    {
-      id: 'GRSDMC',
-      name:'GRSDMC',
-    }
-  ];
-
-  constructor(private casesService: CasesService, private userService: UserService) { }
+  constructor(private casesService: CasesService,
+    private userService: UserService,
+    private labelsService: LabelsService) { }
 
   ngOnInit(): void {
     this.casesService.getNextCase()
     .subscribe( nextCase => {
       this.nextCase = nextCase as Case;
+      this.selectedLabels = this.nextCase.labels;
+    });
+
+    this.labelsService.labels().subscribe(labels => {
+      this.labels = labels as Labels;
     })
   }
 
@@ -51,25 +50,16 @@ export class CasesComponent implements OnInit {
     const labelMapObject = labelMap.get('label') as Object[];
     const labelObject = new Map(Object.entries(labelMapObject));
     const lbl = {
-      idLabel: labelObject.get('id'),
-      nameLabel: labelObject.get('name')
+      id: labelObject.get('id'),
+      description: labelObject.get('description')
     }
-    this.selectedLabels.push(lbl);
+    this.selectedLabels.push(lbl as Label);
     this.user$.subscribe(val => this.idUser = val.id!);
     this.casesService.saveLabel(this.nextCase?.caseId as number,
-      lbl.idLabel as number,
+      lbl.id as number,
       this.idUser as number).subscribe();
   }
 
   selectEvent(item: any) {
-  }
-
-  onChangeSearch(val: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
-
-  onFocused(e: any){
-    // do something when input is focused
   }
 }

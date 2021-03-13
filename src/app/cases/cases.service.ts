@@ -17,7 +17,6 @@ export class CasesService {
   }
 
   saveLabel(idCase: number, idLabel: number, idUser: number){
-    console.log(idUser);
     const token = this.tokenService.returnToken();
     return this.httpClient.post(`http://localhost:8081/cases/${idCase}/label`,
     {

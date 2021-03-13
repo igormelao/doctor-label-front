@@ -4,3 +4,26 @@
 .btn-round { border-radius: 30px; }
 .bg-EHR { background: rgb(217, 223, 238); }
 
+.col-labels {
+  width: 600px;
+}
+.ng-autocomplete {
+  width:100%;
+  display: table;
+  margin: 0 auto;
+}
+.label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 100px;
+  height: 45px;
+  padding: 0 16px;
+  text-align: left;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+span {
+  margin-left: 5px;
+}

@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
    }, (error) => {
      alert("User or password invalid!");
      console.log(error);
+     this.router.navigate(['']);
    })
   }
 
