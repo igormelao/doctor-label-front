@@ -30,19 +30,35 @@ export class CasesComponent implements OnInit {
     private labelsService: LabelsService) { }
 
   ngOnInit(): void {
-    this.casesService.getNextCase()
-    .subscribe( nextCase => {
-      this.nextCase = nextCase as Case;
-      this.selectedLabels = this.nextCase.labels;
-    });
+    this.findNextCase();
 
     this.labelsService.labels().subscribe(labels => {
       this.labels = labels as Labels;
     })
   }
 
-  getNextCase() {
-    console.log(this.selectedLabels);
+  private findNextCase(){
+    this.casesService.getNextCase().subscribe( nextCase => {
+      this.nextCase = nextCase as Case;
+      this.selectedLabels = this.nextCase.labels;
+    },
+    (error) => {
+      if(error.status == 404)
+        this.nextCase = undefined;
+      else
+        alert('Some error happens. Please try again or contact Suport Team. Error status ' + error.status);
+    });
+  }
+
+  closeAndNextCase() {
+    console.log(this.nextCase);
+    this.casesService.closeCase(this.nextCase?.caseId as number).subscribe(ret => {
+      console.log(ret);
+      this.findNextCase();
+    },
+    (error) => {
+      alert('Some error happens. Please try again or contact Suport Team. Error status ' + error.status);
+    })
   }
 
   addLabel(label: Object[]) {
@@ -58,8 +74,5 @@ export class CasesComponent implements OnInit {
     this.casesService.saveLabel(this.nextCase?.caseId as number,
       lbl.id as number,
       this.idUser as number).subscribe();
-  }
-
-  selectEvent(item: any) {
   }
 }

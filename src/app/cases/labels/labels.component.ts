@@ -17,7 +17,13 @@ export class LabelsComponent implements OnInit {
     this.labelsService.labels()
     .subscribe( labels => {
       this.labels = labels as Labels;
-    })
+    },
+    (error) => {
+      this.labels = [];
+      if(error.status != 404)
+        alert('Some error happens. Please try again or contact Suport Team. Error status ' + error.status);
+    }
+    )
   }
 
 }

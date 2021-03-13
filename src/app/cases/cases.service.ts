@@ -28,5 +28,14 @@ export class CasesService {
     });
   }
 
+  closeCase(idCase: number){
+    const token = this.tokenService.returnToken();
+    return this.httpClient.put(`http://localhost:8081/cases/${idCase}/close`,
+    {},
+    {
+      headers: new HttpHeaders({'Authorization': 'Bearer ' + token})
+    });
+  }
+
 }
 

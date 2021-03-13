@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit():void {
+
   }
 
   login(){
@@ -22,7 +23,6 @@ export class LoginComponent implements OnInit {
      this.router.navigate(['cases']);
    }, (error) => {
      alert("User or password invalid!");
-     console.log(error);
      this.router.navigate(['']);
    })
   }
